@@ -81,8 +81,9 @@ def generate_entity_classes(database_file):
 
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     table_names = cursor.fetchall()
-
-    script_directory = r"C:\Users\pooja\Downloads"
+    
+    # Specify output directory to save extension files
+    script_directory = r"output\directory\for\room_files"
     output_directory = os.path.join(script_directory, "kotlin_files")
 
     if not os.path.exists(output_directory):
