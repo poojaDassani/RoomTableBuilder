@@ -1,7 +1,10 @@
 import os
 import re
 import sqlite3
+import roomDaoBuilder
 
+
+ENTITY_DIR = None
 def convert_to_camel_case(column_name):
     words = column_name.split('_')
     camel_case_words = [words[0].lower()] + [word.title() for word in words[1:]]
@@ -83,10 +86,10 @@ def generate_entity_classes(database_file):
     table_names = cursor.fetchall()
 
     script_directory = r"C:\Users\pooja\Downloads"
-    output_directory = os.path.join(script_directory, "kotlin_files")
-
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    global ENTITY_DIR
+    ENTITY_DIR = os.path.join(script_directory, "kotlin_files")
+    if not os.path.exists(ENTITY_DIR):
+        os.makedirs(ENTITY_DIR)
 
     for table_name in table_names:
         table_name = table_name[0]
@@ -98,7 +101,7 @@ def generate_entity_classes(database_file):
 
         # Write the entity class to a separate Kotlin file
         file_name = f"{convert_to_camel_case_table(table_name)}.kt"
-        file_path = os.path.join(output_directory, file_name)
+        file_path = os.path.join(ENTITY_DIR, file_name)
         with open(file_path, "w") as file:
             file.write("package com.snapbizz.snapbilling.v2.models\n\n")
             file.write("import androidx.room.Entity\n")
@@ -110,7 +113,12 @@ def generate_entity_classes(database_file):
     connection.close()
 
 # Specify the path to your SQLite database file
-database_file = r"path\your\Db file exists\database.db"
+database_file = r"C:\Users\pooja\Downloads\snapbizzv2.db"
 
 # Generate the Room entity classes as separate Kotlin files
 generate_entity_classes(database_file)
+
+# Output directory for DAO classes
+OUTPUT_DIR = r"C:\Users\pooja\Downloads\dao_files"
+# Generate the Room entity classes DAO files
+roomDaoBuilder.generate_dao_files(ENTITY_DIR, OUTPUT_DIR)
