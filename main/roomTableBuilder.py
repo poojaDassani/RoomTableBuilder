@@ -85,7 +85,7 @@ def generate_entity_classes(database_file):
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     table_names = cursor.fetchall()
 
-    script_directory = r"C:\Users\pooja\Downloads"
+    script_directory = r"path\to\entity\classes"
     global ENTITY_DIR
     ENTITY_DIR = os.path.join(script_directory, "kotlin_files")
     if not os.path.exists(ENTITY_DIR):
@@ -103,7 +103,7 @@ def generate_entity_classes(database_file):
         file_name = f"{convert_to_camel_case_table(table_name)}.kt"
         file_path = os.path.join(ENTITY_DIR, file_name)
         with open(file_path, "w") as file:
-            file.write("package com.snapbizz.snapbilling.v2.models\n\n")
+            file.write("package com.test.test.models\n\n")
             file.write("import androidx.room.Entity\n")
             file.write("import androidx.room.PrimaryKey\n")
             file.write("import androidx.room.ColumnInfo\n\n")
@@ -113,12 +113,12 @@ def generate_entity_classes(database_file):
     connection.close()
 
 # Specify the path to your SQLite database file
-database_file = r"C:\Users\pooja\Downloads\snapbizzv2.db"
+database_file = r"path\to\db"
 
 # Generate the Room entity classes as separate Kotlin files
 generate_entity_classes(database_file)
 
 # Output directory for DAO classes
-OUTPUT_DIR = r"C:\Users\pooja\Downloads\dao_files"
+OUTPUT_DIR = r"path\to\dao"
 # Generate the Room entity classes DAO files
 roomDaoBuilder.generate_dao_files(ENTITY_DIR, OUTPUT_DIR)
