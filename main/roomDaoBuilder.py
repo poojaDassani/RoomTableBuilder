@@ -3,10 +3,10 @@ import os
 import re
 
 # Define the template for the DAO interface
-DAO_TEMPLATE = """package com.snapbizz.snapbilling.v2.dao
+DAO_TEMPLATE = """package com.test.test.dao
 
 import androidx.room.*
-import com.snapbizz.snapbilling.v2.models.{entity_name}
+import com.test.test.models.{entity_name}
 
     
 @Dao
